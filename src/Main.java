@@ -12,13 +12,16 @@ public class Main {
     static int bookingCount = 0;
 
     public static void main(String[] args) {
-        setSeat();
+        configSeat();
     }
 
-    static void setSeat() {
-        System.out.print("Enter number of row : ");
+    static void configSeat() {
+        System.out.println("-+".repeat(20));
+        System.out.println("CSTAD HALL BOOKING SYSTEM");
+        System.out.println("-+".repeat(20));
+        System.out.print("> Config total rows in hall: ");
         int rows = Integer.parseInt(scanner.nextLine());
-        System.out.print("Enter number of column : ");
+        System.out.print("> Config total seats per row in hall: ");
         int columns = Integer.parseInt(scanner.nextLine());
 
         String[][] seatsMorning = new String[rows][columns];
@@ -56,12 +59,8 @@ public class Main {
                                 System.out.println("# Single: C-1");
                                 System.out.println("# Multiple: C-1,C-2");
 
-//                                String seatBookingValidate = "^\\[C-\\d+(?:,C)?(?:,\\d+)?]$";
-//                                String opValidate = scanner.nextLine().trim();
-//                                Pattern pattern1 = Pattern.compile(seatBookingValidate);
-//                                Matcher matcher1 = pattern1.matcher(opValidate);
                                 System.out.print("> Please select available seat : ");
-                                String seatToBook = scanner.nextLine().toUpperCase();
+                                String seatToBook = scanner.nextLine();
                                 System.out.print("> Please enter student ID : ");
                                 String stuId = scanner.nextLine();
                                 addToBookingHistory(seatToBook, stuId, hallName);
@@ -101,7 +100,7 @@ public class Main {
                                 System.out.println("# Single: C-1");
                                 System.out.println("# Multiple: C-1,C-2");
 
-//                                String seatBookingValidate = "^\\[C-\\d+(?:,C)?(?:,\\d+)?]$";
+//                                String seatBookingValidate = "C-\\d+(,C-\\d+)*";
 //                                   String opValidate = scanner.nextLine().trim();
 //                                Pattern pattern1 = Pattern.compile(seatBookingValidate);
 //                                Matcher matcher1 = pattern1.matcher(opValidate);
@@ -147,7 +146,7 @@ public class Main {
                                 System.out.println("# Single: C-1");
                                 System.out.println("# Multiple: C-1,C-2");
 
-//                                String seatBookingValidate = "^\\[C-\\d+(?:,C)?(?:,\\d+)?]$";
+//                                String seatBookingValidate = "C-\\d+(,C-\\d+)*";
 //                                String opValidate = scanner.nextLine().trim();
 //                                Pattern pattern1 = Pattern.compile(seatBookingValidate);
 //                                Matcher matcher1 = pattern1.matcher(opValidate);
@@ -295,11 +294,10 @@ public class Main {
             String formattedEntry = String.format("""
         -------------------------------------------
         #No: %d
-        #SEATS: %s
+        #SEATS: [%s]
         #HALL       #STU.ID         #CREATED AT
-        Hall %s       %s            %s
-        ------------------------------------------
-        """, i + 1, seats, hallName, studentId, timestamp);
+        Hall %s      %s           %s
+        ------------------------------------------""", i + 1, seats, hallName, studentId, timestamp);
             System.out.println(formattedEntry);
         }
     }
