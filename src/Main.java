@@ -72,14 +72,7 @@ public class Main {
                                     Matcher matcherYn = patternYn.matcher(opValidate);
                                     if (matcherYn.matches()) {
                                         switch (opValidate.toUpperCase()) {
-                                            case "Y" -> {
-                                                addToBookingHistory(seatToBook, stuId, hallName);
-                                                String success = """
-                                                        +------------------------+
-                                                        # Seat(s) booked successfully.
-                                                        +------------------------+""";
-                                                System.out.println(success);
-                                            }
+                                            case "Y" -> addToBookingHistory(seatToBook, stuId, hallName);
                                             case "N" -> {
                                                 System.out.println("--------------------");
                                                 System.out.println("!!Booking canceled!!");
@@ -96,9 +89,14 @@ public class Main {
                                             if (seatsMorning[row][col].contains("BO")) {
                                                 String fail = """
                                                         +------------------------+
-                                                        # Seat(s) already booked.
-                                                        +------------------------+""";
+                                                        # Seat(s) already booked.33""";
                                                 System.out.println(fail);
+                                            } else {
+                                                seatsMorning[row][col] = seatsMorning[row][col].replace("AV","BO");
+                                                String success = """
+                                                        +------------------------+
+                                                        # Seat(s) booked successfully.""";
+                                                System.out.println(success);
                                             }
                                         } else {
                                             System.err.println("Invalid seat selection: " + part);
@@ -141,17 +139,13 @@ public class Main {
                                             if (seatsAfternoon[row][col].contains("BO")) {
                                                 String fail = """
                                                         +------------------------+
-                                                        # Seat(s) already booked.
-                                                        +------------------------+
-                                                        """;
+                                                        # Seat(s) already booked.""";
                                                 System.out.println(fail);
                                             } else {
                                                 seatsAfternoon[row][col] = seatsAfternoon[row][col].replace("AV", "BO");
                                                 String success = """
                                                         +------------------------+
-                                                        # Seat(s) booked successfully.
-                                                        +------------------------+
-                                                        """;
+                                                        # Seat(s) booked successfully.""";
                                                 System.out.println(success);
                                             }
                                         } else {
@@ -198,17 +192,13 @@ public class Main {
                                             if (seatsNight[row][col].contains("BO")) {
                                                 String fail = """
                                                         +------------------------+
-                                                        # Seat(s) already booked.
-                                                        +------------------------+
-                                                        """;
+                                                        # Seat(s) already booked.""";
                                                 System.out.println(fail);
                                             } else {
                                                 seatsNight[row][col] = seatsNight[row][col].replace("AV", "BO");
                                                 String success = """
                                                         +------------------------+
-                                                        # Seat(s) booked successfully.
-                                                        +------------------------+
-                                                        """;
+                                                        # Seat(s) booked successfully.""";
                                                 System.out.println(success);
                                             }
                                         } else {
@@ -246,8 +236,7 @@ public class Main {
                                     String fail = """
                                             +------------------------+
                                             # Hall reboot failed.
-                                            +------------------------+
-                                            """;
+                                            +------------------------+""";
                                     System.out.println(fail);
                                 }
                                 case "y" -> {
@@ -257,16 +246,8 @@ public class Main {
                                     String success = """
                                             +------------------------+
                                             # Hall reboot successfully.
-                                            +------------------------+
-                                            """;
+                                            +------------------------+""";
                                     System.out.println(success);
-                                    if (bookingCount == 0){
-                                        String noHistoryMessage = """
-                                                            -----------------------------------
-                                                                There is no booking history.
-                                                            -----------------------------------""";
-                                        System.out.println(noHistoryMessage);
-                                    }
                                 }
                             }
                         } else {
@@ -293,6 +274,7 @@ public class Main {
                 return Integer.parseInt(input);
             } else {
                 System.err.println("Invalid input. Please enter a positive integer...");
+                System.out.println();
             }
         }
     }
@@ -330,6 +312,7 @@ public class Main {
     }
 
     static void rebootHall(String[][] seats) {
+        bookingCount = 0;
         for (int row = 0; row < seats.length; row++) {
             for (int col = 0; col < seats[row].length; col++) {
                 seats[row][col] = seats[row][col].replace("BO", "AV");
